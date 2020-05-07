@@ -1,9 +1,9 @@
 pipeline {
     agent any
     stages {
-        stage('NORMAL Stage') {
+        stage('Non-Parallel Stage') {
             steps {
-                echo 'I am one'
+                echo 'This stage will be executed first.'
             }
         }
         stage('Parallel Stage') {
@@ -12,25 +12,37 @@ pipeline {
             }
             failFast true
             parallel {
-                stage('DCA_Import') {
+                stage('Branch A') {
                     agent {
-                        label "stageonebranch"
+                        label "for-branch-a"
                     }
                     steps {
-                        echo "Me in stage one"
+                        echo "On Branch A"
                     }
                 }
-                stage('Stage two') {
+                stage('Branch B') {
                     agent {
-                        label "stage two"
+                        label "for-branch-b"
                     }
                     steps {
-                        echo "Me in stage two"
+                        echo "On Branch B"
                     }
                 }
-                stage('Stage three') {
+                stage('Branch C') {
                     agent {
-                        label "Stage Three"
+                        label "for-branch-c"
+                    }
+                    stages {
+                        stage('Nested 1') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                        stage('Nested 2') {
+                            steps {
+                                echo "In stage Nested 2 within Branch C"
+                            }
+                        }
                     }
                 }
             }
