@@ -9,40 +9,11 @@ pipeline {
 
     stage('Import') {
       parallel {
-        stage('Import') {
-          steps {
-            echo 'From Import stage'
-          }
-        }
 
-        stage('DCA Import') {
-          steps {
-            echo 'from dca import'
-          }
-          stages {
-                        stage('DCA-Automated-tests') { steps {echo 'Executing Automated tests on Python2.x SA version'}}
-                        stage('JFrog Publish') { steps {echo 'Executing Automated tests on Python2.x SA version'}}
-                    }
-        }
-
-        stage('Import on SA 2018.08') {
-          steps {
-            echo 'import on SA with python2.x'
-          }
-          stages {
-                        stage('Python2.x_Automated_Tests') { steps {echo 'Executing Automated tests on Python2.x SA version'}}
-                    }
-        }
-
-        stage('Import on SA 2020.09') {
-          steps {
-            echo 'import on SA'
-          }
-          stages {
-                        stage('Python3.x_Automated_Tests') { steps {echo 'Executing Automated tests on Python3.x SA version'}}
-                    }
-        }
-
+        "DCA_Import" : { stage("Import") { }; stage("AutomatedTests") { }; stage("JFrogPublish") { } },
+        "SA_Python2.x" : { stage("Import_SA_Python2.x") { }; stage("AutomatedTests") { }},
+        "SA_Python3.x" : { stage("Import_SA_Python3.x") { }; stage("AutomatedTests") { }}
+        
       }
     }
 
