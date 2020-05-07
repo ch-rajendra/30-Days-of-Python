@@ -6,6 +6,7 @@ pipeline {
         echo 'from build compliance'
       }
     }
+  }
 
     stage('Import') {
       parallel {
@@ -18,4 +19,4 @@ pipeline {
     }
 
   }
-}
+
