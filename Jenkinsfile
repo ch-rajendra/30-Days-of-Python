@@ -1,21 +1,39 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build Compliance') {
-      steps {
-        echo 'from build compliance'
-      }
+    agent any
+    stages {
+        stage('NORMAL Stage') {
+            steps {
+                echo 'I am one'
+            }
+        }
+        stage('Parallel Stage') {
+            when {
+                branch 'master'
+            }
+            failFast true
+            parallel {
+                stage('DCA_Import') {
+                    agent {
+                        label "stageonebranch"
+                    }
+                    steps {
+                        echo "Me in stage one"
+                    }
+                }
+                stage('Stage two') {
+                    agent {
+                        label "stage two"
+                    }
+                    steps {
+                        echo "Me in stage two"
+                    }
+                }
+                stage('Stage three') {
+                    agent {
+                        label "Stage Three"
+                    }
+                }
+            }
+        }
     }
-  }
-
-    stage('Import') {
-      parallel {
-        stage("Import") { }; stage("AutomatedTests") { }; stage("JFrogPublish") { } 
-        stage("Import_SA_Python2.x") { }; stage("AutomatedTests") { }
-        stage("Import_SA_Python3.x") { }; stage("AutomatedTests") { }
-        
-      }
-    }
-
-  }
-
+}
