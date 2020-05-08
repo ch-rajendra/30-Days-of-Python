@@ -1,38 +1,29 @@
 pipeline{
-    agent any
-stages {
-    stage('Build') {
-      steps {
-        echo 'This stage will be executed first.'
-      }
+        agent any
+    stages {
+        stage('Example') {
+            steps { 
+                echo 'mvn compile'
+            }
+        }
     }
+
+    parallel (
+  "first": {
+    stage("JUnit") {
     }
-parallel (
-  "DCA": {
-    stage("DCA_Import") {
-      stage("one-child1") {
-        println "one-child1"
-      }
-      stage("DCA_AXIS_TESTS") {
-        println "one-child2"
-      }
+    stage("Firefox") { 
     }
   },
-  "SA_Python2.x": {
-    stage("SA_Python2.x_Import") {
-        println "two-child1"
-      }
-      stage("SA_Python2.x_Tests") {
-        println "two-child2"
-      }
+  "second" : {
+    stage("D3Unit") {
+    }
+    stage("Edge") {
+    }
   },
-  "SA_Python3.x": {
-    stage("SA_Python3.x_Import") {
-       println "three-child1"
-      }
-      stage("SA_Python3.x_Tests") {
-        println "three-child2"
-      }
+  "third" : {
+    stage("Safari") {
+    }
   }
-) 
+)
 }
