@@ -1,9 +1,8 @@
-import org.jenkinsci.plugins.pipeline.modeldefinition.actions.ExecutionModelAction
-import org.jenkinsci.plugins.pipeline.modeldefinition.ast.ModelASTStages
-
-if (!currentBuild.rawBuild.getAction(ExecutionModelAction))
-    currentBuild.rawBuild.addAction(new ExecutionModelAction(new ModelASTStages(null)))
- stages {
+pipeline{
+    agent{
+        none
+    }
+stages {
     stage('Build') {
       steps {
         echo 'This stage will be executed first.'
@@ -38,3 +37,4 @@ parallel (
       }
   }
 ) 
+}
