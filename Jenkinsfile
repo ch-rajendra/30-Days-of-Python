@@ -1,28 +1,29 @@
 pipeline {
   agent any
   stages {
-    stage("Build and Test") {
+    stage("Build") {
       steps {
-        script {
-          parallel 
+          echo "From build step"
+      }
+    stage("Parallel_Import")   
+    parallel 
           linux: {
-            stage("linux_build") {
-              echo "Inside for loop 1"
+            stage("linux_import") {
+              echo "Inside linux_import"
             }
             stage("linux_test") {
-              echo "Inside for loop 2"
+              echo "Inside linux_test"
             }
           },
           windows: {
-            stage("windows_build") {
-              echo "Inside for loop 3"
+            stage("windows_import") {
+              echo "Inside windows_import"
             }
             stage("windows_test") {
-              echo "Inside for loop 4"
+              echo "Inside windows_test"
             }
           }
         }
       }
-    }
-  }
-}
+ }
+
