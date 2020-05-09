@@ -4,19 +4,20 @@ pipeline {
     stage("Build and Test") {
       steps {
         script {
-          parallel linux: {
-            node("linux_build") {
+          parallel 
+          linux: {
+            stage("linux_build") {
               echo "Inside for loop 1"
             }
-            node("linux_test") {
+            stage("linux_test") {
               echo "Inside for loop 2"
             }
           },
           windows: {
-            node("windows_build") {
+            stage("windows_build") {
               echo "Inside for loop 3"
             }
-            node("windows_test") {
+            stage("windows_test") {
               echo "Inside for loop 4"
             }
           }
