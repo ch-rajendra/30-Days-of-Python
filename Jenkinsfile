@@ -1,33 +1,35 @@
+def stepsToRun = [:]
+
 pipeline {
-  agent any
-  stages {
-    stage("Build") {
-      steps {
-          echo "From build step"
-      }
-      }
-    stage("Parallel_Import")
-    { 
-    parallel [
-          linux: {
-            stage("linux_build") {
-              echo "Inside linux_build"
+    agent none
+
+    stages {
+        stage ("Prepare Stages"){
+            steps {
+                script {
+                    for (int i = 1; i < 5; i++) {
+                        stepsToRun["Step${i}"] = prepareStage("Step${i}")
+                    }   
+                    parallel stepsToRun
+                }
             }
-            stage("linux_test") {
-              echo "Inside linux_test"
-            }
-          },
-          windows: {
-            stage("windows_build") {
-              echo "Inside windows_build"
-            }
-            stage("windows_test") {
-              echo "Inside windows_test"
-            }
-          }
-    ]
-    }
         }
-      }
+    }
+}
 
-
+def prepareStage(def name) {
+    return {
+        stage (name) {
+            stage("1") {
+                echo "start 1"
+                sleep 1
+                echo "done 1"
+            }
+            stage("2") {
+                echo "start 2"
+                sleep 1
+                echo "done 2"
+            }
+        }
+    }
+}
