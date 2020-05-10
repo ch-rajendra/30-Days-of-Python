@@ -9,7 +9,7 @@ pipeline{
             }
         }
         stage("Import_B") {
-            ...
+            steps{{echo 'from import_b'}}
         }
         
     }
