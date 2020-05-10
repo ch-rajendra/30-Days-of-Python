@@ -1,23 +1,45 @@
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      steps {
-        echo 'from build'
-      }
-    }
-  }
- stage('Import') {
-    parallel {
-        stage("Import_A") { 
-            stages {
-                stage("Tests_A") { steps { echo 'from A' } } 
-                stage("Publish") { steps { echo 'from Publish' } }
+    agent none
+    stages {
+        stage('Non-Parallel Stage') {
+            steps {
+                echo 'This stage will be executed first.'
             }
         }
-        stage("Import_B") {
-            steps { echo 'from B' } 
+        stage('Parallel Stage') {
+            when {
+                branch 'master'
+            }
+            failFast true
+            parallel {
+                stage('Branch A') {
+                    
+                    steps {
+                        echo "On Branch A"
+                    }
+                }
+                stage('Branch B') {
+                    
+                    steps {
+                        echo "On Branch B"
+                    }
+                }
+                stage('Branch C') {
+                    
+                    stages {
+                        stage('Nested 1') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                        stage('Nested 2') {
+                            steps {
+                                echo "In stage Nested 2 within Branch C"
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-}   
 }
