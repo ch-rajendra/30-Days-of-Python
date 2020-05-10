@@ -24,8 +24,7 @@ pipeline {
                         echo "On Branch B"
                     }
                 }
-                stage('DCA_Import') {
-                    
+                stage('DCA') {                    
                     stages {
                         stage('Import_Content') {
                             steps {
@@ -42,6 +41,35 @@ pipeline {
                                 echo "In stage Nested 2 within Branch C"
                             }
                         }
+                    }
+                }
+                 stage('SA3.x') {                    
+                    stages {
+                        stage('Import_SAPython3.x') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                        stage('SA_Tests') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                    }
+                }
+                 stage('SA2.x') {                    
+                    stages {
+                        stage('Import_SAPython2.x') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                        stage('SA_Tests') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                       
                     }
                 }
             }
