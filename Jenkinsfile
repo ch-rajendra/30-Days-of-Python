@@ -1,12 +1,12 @@
 pipeline {
     agent none
     stages {
-        stage('Non-Parallel Stage') {
+        stage('Build') {
             steps {
                 echo 'This stage will be executed first.'
             }
         }
-        stage('Parallel Stage') {
+        stage('Import') {
             when {
                 branch 'master'
             }
@@ -24,15 +24,20 @@ pipeline {
                         echo "On Branch B"
                     }
                 }
-                stage('Branch C') {
+                stage('DCA_Import') {
                     
                     stages {
-                        stage('Nested 1') {
+                        stage('Import_Content') {
                             steps {
                                 echo "In stage Nested 1 within Branch C"
                             }
                         }
-                        stage('Nested 2') {
+                        stage('DCA_Tests') {
+                            steps {
+                                echo "In stage Nested 1 within Branch C"
+                            }
+                        }
+                        stage('Publish') {
                             steps {
                                 echo "In stage Nested 2 within Branch C"
                             }
