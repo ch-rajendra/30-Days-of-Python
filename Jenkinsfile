@@ -14,7 +14,7 @@ pipeline {
             parallel {
                 stage('DCA') {                    
                     stages {
-                        stage('Import_Content') {
+                        stage('DCA_Import') {
                             steps {
                                 echo "In stage Nested 1 within Branch C"
                             }
@@ -24,7 +24,7 @@ pipeline {
                                 echo "In stage Nested 1 within Branch C"
                             }
                         }
-                        stage('Publish') {
+                        stage('JFrog_Publish') {
                             steps {
                                 echo "In stage Nested 2 within Branch C"
                             }
@@ -33,7 +33,7 @@ pipeline {
                 }
                  stage('SA3.x') {                    
                     stages {
-                        stage('Import_SAPython3.x') {
+                        stage('Import_SA_Python3.x') {
                             steps {
                                 echo "In stage Nested 1 within Branch C"
                             }
@@ -47,7 +47,7 @@ pipeline {
                 }
                  stage('SA2.x') {                    
                     stages {
-                        stage('Import_SAPython2.x') {
+                        stage('Import_SA_Python2.x') {
                             steps {
                                 echo "In stage Nested 1 within Branch C"
                             }
