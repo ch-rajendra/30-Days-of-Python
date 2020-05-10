@@ -1,6 +1,13 @@
-pipeline{
-    agent none
-    stage('Import') {
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        echo 'from build'
+      }
+    }
+  }
+ stage('Import') {
     parallel {
         stage("Import_A") { 
             stages {
@@ -9,8 +16,8 @@ pipeline{
             }
         }
         stage("Import_B") {
+            steps { echo 'from B' } 
         }
-        
     }
-}
+}   
 }
