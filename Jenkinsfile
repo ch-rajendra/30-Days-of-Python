@@ -1,5 +1,5 @@
 pipeline{
-    agent None
+    agent none
     stage('Import') {
     parallel {
         stage("Import_A") { 
