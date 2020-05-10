@@ -1,12 +1,12 @@
 pipeline {
     agent none
     stages {
-        stage('Build') {
+        stage('Build_Content') {
             steps {
                 echo 'This stage will be executed first.'
             }
         }
-        stage('Import') {
+        stage('Import_Content') {
             when {
                 branch 'master'
             }
